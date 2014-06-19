@@ -71,10 +71,13 @@ module Perspectives
 
         if opts[:prefix]
           prefix = opts[:prefix] == true ? opts[:to] : opts[:prefix]
-          prop_names = prop_names.map { |n| "#{prefix}_#{n}" }
+          prop_names = prop_names.map { |n| "#{prefix}_#{n}" } || []
         end
 
-        prop_names.each(&public_method(:property))
+        prop_names.each do |property|
+          self._properties += [property]
+          self.instance_methods.include?(property)
+        end
       end
 
       private

@@ -39,13 +39,11 @@ module Perspectives
         context = default_context
         params = params_or_options
       end
-
       resolve_perspective_class_name(name).new(context, params)
     end
 
     def respond_with(*resources, &block)
       return super unless wrap_perspective? && resources.first.is_a?(Perspectives::Base)
-
       wrapped = wrap_perspective(resources.shift)
 
       super(*resources.unshift(wrapped), &block)
